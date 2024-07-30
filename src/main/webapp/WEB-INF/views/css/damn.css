@@ -1,0 +1,188 @@
+.container img {
+    width: 80px;
+    margin-right: 150px;
+}
+
+body {
+    background-color: rgb(241, 241, 229);
+}
+.func{
+    margin-top: 240px;
+}
+.da{
+    margin-bottom: 170px;
+    margin-top: -100px;
+}
+.sor{
+    margin-top: 210px;
+}
+.menucss{
+    z-index: 1000;
+    margin-bottom: 20px;
+    margin-top: -1px;
+}
+.dropdown-menu li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.slider-content-left-top a img {
+    margin-bottom: 10px;
+    width: 150px;
+    height: 120px;
+}
+
+.slider-content-left-top p {
+    margin-left: 160px;
+    margin-top: -130px;
+}
+
+.card-body img {
+    margin-bottom: 20px;
+
+    width: 250px;
+    height: 140px;
+}
+
+.container a {
+    font-size: 15px;
+}
+
+.card-body :hover {
+    background-color: darkgray;
+}
+
+.card-footer:hover {
+    background-color: lightyellow;
+}
+
+.card-footer {
+    background-color: lightgrey;
+}
+
+.card {
+    background-color: black;
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+}
+
+.card-header {
+    color: aliceblue;
+}
+
+header {
+    position: relative;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: blue;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.custom-hr {
+    border: none;
+    border-top: 3px solid lightyellow;
+    /* Đặt chiều cao của đường gạch chân */
+    margin: 3px 0;
+    /* Điều chỉnh khoảng cách trên và dưới đường gạch chân */
+}
+.logo {
+    width: 100px;
+    margin-left: 5px;
+    /* Thêm các thuộc tính khác nếu cần */
+}
+h5 {
+    color: darkorange;
+}
+.fter {
+    background-color: black;
+}
+.cc {
+    position: relative;
+    margin-right: 2px !important;
+    width: 380px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+
+}
+
+.image-container:hover .image-caption {
+    opacity: 1;
+    /* Hiện chữ khi hover vào hình ảnh */
+}
+
+h4 {
+    color: darkred;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.image-caption {
+    color: darkblue;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+#myTabs {
+    margin-top: 10px !important;
+}
+
+.ccc img {
+    border: 2px solid #000;
+    /* Đường viền đen 2px */
+    border-radius: 8px;
+    /* Cong mép */
+    margin-right: 2px !important;
+    width: 370px;
+    margin-left: 3px;
+    margin-bottom: 20px;
+
+}
+
+.tab-content img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #000;
+    /* Đường viền đen 2px */
+    border-radius: 8px;
+    /* Cong mép */
+}
+
+@media only screen and (max-width:768px) {
+    .cc {
+        margin-right: 2px !important;
+        width: 380px;
+        margin-left: 15px;
+        margin-bottom: 10px;
+
+    }
+}
+
+.img-fluid {
+    transition: transform 0.5s ease-in-out;
+}
+
+.img-fluid:hover {
+    transform: scale(1.1);
+}
+
+.vai {
+    margin-top: 10px;
+}
+
+.tintuc {
+    margin-top: 10px !important;
+}
+.chu{
+    color: darkorange;
+    font-weight: bold;
+    font-size: 1rem;
+}
