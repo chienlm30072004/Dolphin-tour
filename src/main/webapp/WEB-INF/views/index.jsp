@@ -20,6 +20,7 @@
 
     <style>
         <%@include file="css/damn.css"%>
+        <%@include file="css/style.css"%>
         header {
             <%--background-image: url('<c:url value="/imgaes/banner.webp"/>');--%>
             background-size: cover;
@@ -212,6 +213,38 @@
         </button>
     </div>
 </header>
+<div class="gallery">
+        <span class="xoayy" style="--i:1">
+            <img class="anhxoay" src="./img/tour1.jpg">
+        </span>
+    <span class="xoayy" style="--i:2">
+            <img class="anhxoay" src="./img/tour2.png">
+        </span>
+    <span class="xoayy" style="--i:3">
+            <img class="anhxoay" class="anhxoay" src="./img/tour3.png">
+        </span>
+    <span class="xoayy" style="--i:4">
+            <img class="anhxoay" class="anhxoay" src="./img/tour4.png">
+        </span>
+    <span class="xoayy" style="--i:5">
+            <img class="anhxoay" class="anhxoay" src="./img/tour5.jpg">
+        </span>
+    <span class="xoayy" style="--i:6">
+            <img class="anhxoay" src="./img/tour6.png">
+        </span>
+    <span class="xoayy" style="--i:7">
+            <img class="anhxoay" src="./img/tour7.jpg">
+        </span>
+    <span class="xoayy" style="--i:8">
+            <img class="anhxoay" src="./img/tour8.png">
+        </span>
+    <span class="xoayy" style="--i:9">
+            <img class="anhxoay" src="./img/tour9.png">
+        </span>
+    <span class="xoayy" style="--i:10">
+            <img class="anhxoay" src="./img/tour5.jpg">
+        </span>
+</div>
 <!-- search sort -->
 <div class="func container">
     <div class="row">
@@ -306,6 +339,7 @@
         </div>
     </div>
 </div>
+
 <h4 class="text-center mt-2">Thư Viện Của Chúng Tôi</h4>
 <!--  -->
 <ul class="nav nav-tabs" id="myTabs">
@@ -461,6 +495,7 @@
             </div>
         </div>
     </footer>
+</div>
 
     <!-- Bootstrap Scripts -->
     <script src="../views/js/script.js"></script>
@@ -480,5 +515,6 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"></script>
+
 </body>
 </html>

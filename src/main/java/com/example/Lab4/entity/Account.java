@@ -16,9 +16,10 @@ public class Account {
     private String fullname;
     private String sdt;
     private String username;
+    private String email;
     private String password;
     private boolean quyen;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private cart cart;
-
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 }

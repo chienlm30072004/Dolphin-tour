@@ -1,9 +1,11 @@
 package com.example.Lab4.service;
 
 import com.example.Lab4.entity.Account;
-import com.example.Lab4.entity.cart;
-import com.example.Lab4.entity.cartItem;
+import com.example.Lab4.entity.Cart;
+import com.example.Lab4.entity.CartItem;
+import com.example.Lab4.entity.Product;
 import com.example.Lab4.repository.AccountRepository;
+import com.example.Lab4.repository.CartItemRepository;
 import com.example.Lab4.repository.cartRepository;
 import com.example.Lab4.repository.productRepository;
 import jakarta.transaction.Transactional;
@@ -13,9 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-
-import com.example.Lab4.entity.product;
 
 @Service
 @Transactional
@@ -23,88 +22,97 @@ public class cartServiceImpl implements cartService {
     private AccountRepository accountRepository;
     private productRepository productRepository;
     private cartRepository cartRepository;
+    private CartItemRepository cartItemRepository;
 
     @Autowired
-    public cartServiceImpl(AccountRepository account, productRepository product) {
-        this.accountRepository = account;
-        this.productRepository = product;
+    public cartServiceImpl(AccountRepository accountRepository, productRepository productRepository, cartRepository cartRepository, CartItemRepository cartItemRepository) {
+        this.accountRepository = accountRepository;
+        this.productRepository = productRepository;
+        this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
-
     @Override
-    public void addItem(int account_id, int product) {
-        Account ac = accountRepository.getById(account_id);
+    public void addItem(int account_id, int product_id) {
+        Account ac = accountRepository.findById(account_id);
         if (ac != null) {
-            cart cart = ac.getCart();
-            product pr = productRepository.getById(product);
+            Cart cart = ac.getCart();
+            if (cart == null) {
+                cart = new Cart();
+                ac.setCart(cart);
+            }
+            Product pr = productRepository.findById(product_id).orElse(null);
             if (pr != null) {
-                List<cartItem> cartItems = cart.getCartItems();
+                List<CartItem> cartItems = cart.getCartItems();
                 if (cartItems == null) {
                     cartItems = new ArrayList<>();
+                    cart.setCartItems(cartItems);
                 }
-                cartItem cartItem = findCartItemByBookId(cartItems, product);
+                CartItem cartItem = findCartItemByBookId(cartItems, pr.getId());
+
                 if (cartItem == null) {
-                    cartItem = new cartItem();
+                    cartItem = new CartItem();
                     cartItem.setProduct(pr);
                     cartItem.setQty(1);
                     cartItem.setCart(cart);
                     cartItems.add(cartItem);
-                    accountRepository.save(ac);
-                    System.out.println("ok");
                 } else {
                     cartItem.incrementQuantity();
-                    System.out.println("+1");
                 }
+
+                cartRepository.save(cart); // Lưu giỏ hàng
+                accountRepository.save(ac); // Lưu tài khoản
             } else {
-                System.out.println("sp null");
+                System.out.println("Product not found");
             }
         } else {
-            System.out.println("accout null");
+            System.out.println("Account not found");
         }
     }
 
     @Override
-    public void removeItem(int userId, int bookId) {
-//        user user = userService.getById(userId);
-//        cart cart = user.getCart();
-//        if (cart != null) {
-//            List<cartItem> cartItems = cart.getCartItems();
-//            cartItems.removeIf(cartItem -> cartItem.getBook().getId() == bookId);
-//            userService.insert(user);
-//        }
-    }
-
-    @Override
-    public cart updateItem(int userId, int bookId, int qty) {
-//        user user = userService.getById(userId);
-//        cart cart = user.getCart();
-//        if (cart != null) {
-//            List<cartItem> cartItems = cart.getCartItems();
-//            cartItem cartItem = findCartItemByBookId(cartItems, bookId);
-//            if (cartItem != null) {
-//                if (qty > 0) {
-//                    cartItem.setQuantity(qty);
-//                } else {
-//                    cartItems.remove(cartItem);
-//                }
-//                userService.insert(user);
-//            }
-//        }
-        return null;
-//        return cart;
+    public void deleteItem(int cartId) {
+            cartRepository.deleteById(cartId);// Lưu lại giỏ hàng sau khi xóa
     }
 
     @Override
     public void clear(int accountId) {
-
-
+        Account account = accountRepository.findById(accountId);
+        if (account != null) {
+            Cart cart = account.getCart();
+            if (cart != null) {
+                cart.getCartItems().clear();
+                cartRepository.save(cart); // Lưu lại giỏ hàng sau khi xóa
+            }
+        }
     }
 
+    @Override
+    public Cart updateItem(int userId, int bookId, int qty) {
+        Account account = accountRepository.findById(userId);
+        if (account != null) {
+            Cart cart = account.getCart();
+            if (cart != null) {
+                List<CartItem> cartItems = cart.getCartItems();
+                CartItem cartItem = findCartItemByBookId(cartItems, bookId);
+                if (cartItem != null) {
+                    if (qty > 0) {
+                        cartItem.setQty(qty);
+                    } else {
+                        cartItems.remove(cartItem);
+                    }
+                    cartRepository.save(cart);
+                    return cart;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
-    public Collection<cartItem> getItems(int account_id) {
+    public Collection<CartItem> getItems(int account_id) {
         Account ac = accountRepository.getById(account_id);
-        cart cart = ac.getCart();
+        Cart cart = ac.getCart();
         if (cart != null) {
             return cart.getCartItems();
         }
@@ -114,7 +122,7 @@ public class cartServiceImpl implements cartService {
     @Override
     public int getCount(int account_id) {
         Account user = accountRepository.getById(account_id);
-        cart cart = user.getCart();
+        Cart cart = user.getCart();
         if (cart != null) {
             return cart.getCartItems().size();
         }
@@ -124,7 +132,7 @@ public class cartServiceImpl implements cartService {
     @Override
     public double getAmount(int userId) {
         Account user = accountRepository.getById(userId);
-        cart cart = user.getCart();
+        Cart cart = user.getCart();
         if (cart != null) {
             return cart.getCartItems().stream()
                     .mapToDouble(item -> item.getProduct().getPrice() * item.getQty())
@@ -135,26 +143,39 @@ public class cartServiceImpl implements cartService {
 
     @Override
     public void increaseQuantity(int userId, int bookId) {
-//        user user = userService.getById(userId);
-//        cart cart = user.getCart();
-//        if (cart != null) {
-//            List<cartItem> cartItems = cart.getCartItems();
-//            cartItem cartItem = findCartItemByBookId(cartItems, bookId);
-//            if (cartItem != null) {
-//                cartItem.incrementQuantity();
-//                userService.insert(user);
-//            }
-//        }
+        Account account = accountRepository.getById(userId);
+        if (account != null) {
+            Cart cart = account.getCart();
+            if (cart != null) {
+                CartItem cartItem = findCartItemByBookId(cart.getCartItems(), bookId);
+                if (cartItem != null) {
+                    cartItem.incrementQuantity();
+                    cartRepository.save(cart);
+                }
+            }
+        }
     }
 
-    // New method to decrease the quantity of a cart item
     @Override
     public void decreaseQuantity(int userId, int bookId) {
-//        user user = userService.getById(userId);
+        Account account = accountRepository.getById(userId);
+        if (account != null) {
+            Cart cart = account.getCart();
+            if (cart != null) {
+                CartItem cartItem = findCartItemByBookId(cart.getCartItems(), bookId);
+                if (cartItem != null && cartItem.getQty() > 1) {
+                    cartItem.decrementQuantity();
+                    cartRepository.save(cart);
+                } else if (cartItem != null && cartItem.getQty() == 1) {
+                    cart.getCartItems().remove(cartItem);
+                    cartRepository.save(cart);
+                }
+            }
+        }
     }
 
-    private cartItem findCartItemByBookId(List<cartItem> cartItems, int bookId) {
-        for (cartItem cartItem : cartItems) {
+    private CartItem findCartItemByBookId(List<CartItem> cartItems, int bookId) {
+        for (CartItem cartItem : cartItems) {
             if (cartItem.getProduct().getId() == bookId) {
                 return cartItem;
             }
@@ -162,3 +183,4 @@ public class cartServiceImpl implements cartService {
         return null;
     }
 }
+

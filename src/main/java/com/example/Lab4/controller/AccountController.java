@@ -2,7 +2,7 @@ package com.example.Lab4.controller;
 
 
 import com.example.Lab4.entity.Account;
-import com.example.Lab4.entity.cart;
+import com.example.Lab4.entity.Cart;
 import com.example.Lab4.repository.AccountRepository;
 import com.example.Lab4.service.Accountservice;
 import com.example.Lab4.service.SessionService;
@@ -122,9 +122,11 @@ public String reset(HttpSession session){
 
 
     @PostMapping("/signup")
-    public String signup(@RequestParam String username, @RequestParam String password, @RequestParam String sdt, @RequestParam String fullname, @RequestParam String quyen, HttpSession session) {
+    public String signup(@RequestParam String username, @RequestParam String password,
+                         @RequestParam String sdt, @RequestParam String fullname,
+                         @RequestParam String quyen, HttpSession session) {
         Account ac = new Account();
-        cart cartnew = new cart();
+        Cart cartnew = new Cart();
         ac.setFullname(fullname);
         ac.setSdt(sdt);
         ac.setUsername(username);

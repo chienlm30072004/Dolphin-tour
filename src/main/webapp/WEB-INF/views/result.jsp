@@ -47,21 +47,18 @@
                 </thead>
                 <tbody>
                 <c:forEach var="item" items="${mycart}">
-                    <form action="/cart/update/${item.id}" method="post">
-                        <input type="hidden" name="id" value="${item.id}">
-                        <tr>
-                            <td>${item.id}</td>
-                            <td>
-                                <img style="width: 50px;height: 50px" src="/img/${item.product.img}">
-                            </td>
-                            <td>${item.product.content}</td>
-                            <td>${item.qty}</td>
-                            <td><fmt:formatNumber value="${item.product.price * item.qty}" type="currency"
-                                                  pattern="#,###,### VNĐ"/></td>
-                            <td><a href="/dropitem/${item.id}">Xóa</a></td>
-                        </tr>
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>
+                            <img style="width: 50px;height: 50px" src="/img/${item.product.img}">
+                        </td>
+                        <td>${item.product.content}</td>
+                        <td>${item.qty}</td>
+                        <td><fmt:formatNumber value="${item.product.price * item.qty}" type="currency"
+                                              pattern="#,###,### VNĐ"/></td>
+                        <td><a href="/dropitem/${item.id}" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a></td>
 
-                    </form>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>

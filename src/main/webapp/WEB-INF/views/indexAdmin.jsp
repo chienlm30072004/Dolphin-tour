@@ -227,10 +227,6 @@
 <div class="container fromuser">
     <form action="/create" method="post">
         <div class="col-md-6 mb-3">
-            <label for="id" class="form-label">Id:</label>
-            <input type="text" id="id" name="id" class="form-control" value="${id.id}">
-        </div>
-        <div class="col-md-6 mb-3">
             <label for="fullname" class="form-label">Họ và tên:</label>
             <input type="text" id="fullname" name="fullname" class="form-control" value="${id.fullname}">
         </div>

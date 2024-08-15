@@ -9,17 +9,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class cartItem {
+public class CartItem { // Đổi tên lớp từ cart_cart_item thành CartItem
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private product product;
+    private Product product; // Đổi tên lớp thành Product
     private int qty;
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    private cart cart;
+    private Cart cart; // Đổi tên lớp thành Cart
     public void incrementQuantity() {
         this.qty++;
     }

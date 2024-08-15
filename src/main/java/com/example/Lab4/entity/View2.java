@@ -10,13 +10,12 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class product {
+@NoArgsConstructor
+public class View2 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String content;
     private String img;
-    private double price;
 }

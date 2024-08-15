@@ -1,17 +1,13 @@
 package com.example.Lab4.controller;
 
-import com.example.Lab4.entity.product;
+import com.example.Lab4.entity.Product;
 import com.example.Lab4.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -22,7 +18,7 @@ public class ProductController {
     public String productList(@RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "sortType", required = false) String sortType,
             HttpSession session) {
-        List<product> products  ;
+        List<Product> products  ;
         if ((search == null || search.isEmpty()) && (sortType == null || sortType.isEmpty())) {
             products = productService.findAll();
             session.setAttribute("products", products);
